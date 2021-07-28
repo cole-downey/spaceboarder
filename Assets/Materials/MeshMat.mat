@@ -107,6 +107,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - regions:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -120,9 +124,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Boolean_4879321f27bb4d1590a7d0b6caa0963e: 0
     - PixelSnap: 0
     - Vector1_4a61d1e2a6f94f5b975cdebeae72d5e2: 0.71
     - Vector1_843a7046916e4a3480c853a6a4d6a6af: 0
+    - Vector1_a9f34d7665304301894121df0755437d: 0.05
     - Vector1_d5913f5b08104e6aa4adb506535b94c3: -0.15
     - _AO: 2.4
     - _AlphaClip: 0
@@ -175,8 +181,10 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - CamPosition: {r: -8.376495, g: -50.278976, b: 4422.2217, a: 0}
     - Color_5f1a57b497194b15ae6082fa1b4f4bc3: {r: 0, g: 0, b: 0, a: 0}
     - Color_d9b6e2ab397e4395b223ebd6f26e3409: {r: 0, g: 0, b: 0, a: 0}
+    - Vector3_a159aa40300e42db98b69c5a22d7544b: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

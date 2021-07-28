@@ -14,6 +14,7 @@ public class EndlessTerrain : MonoBehaviour {
 
     public Transform viewer;
     public Material mapMaterial;
+    public PhysicMaterial physicMaterial;
 
     public static Vector2 viewerPosition;
     static MapGenerator mapGenerator;
@@ -62,7 +63,7 @@ public class EndlessTerrain : MonoBehaviour {
             if (terrainChunkDictionary.ContainsKey(currentChunkCoord)) {
                 terrainChunkDictionary[currentChunkCoord].UpdateChunk();
             } else {
-                terrainChunkDictionary.Add(currentChunkCoord, new TerrainChunk(currentChunkCoord, chunkRadius, chunkLength, detailLevels, transform, mapMaterial, collidersEnabled));
+                terrainChunkDictionary.Add(currentChunkCoord, new TerrainChunk(currentChunkCoord, chunkRadius, chunkLength, detailLevels, transform, mapMaterial, physicMaterial, collidersEnabled));
             }
         }
     }
@@ -86,18 +87,21 @@ public class EndlessTerrain : MonoBehaviour {
         LODMesh collisionLODMesh;
         int previousLODIndex = -1;
 
-        public TerrainChunk(Vector2 coord, float radius, float length, LODInfo[] detailLevels, Transform parent, Material material, bool colliderEnabled = true) {
+        public TerrainChunk(Vector2 coord, float radius, float length, LODInfo[] detailLevels, Transform parent, Material material, PhysicMaterial phyMaterial, bool colliderEnabled = true) {
             position = coord * length;
             bounds = new Bounds(position, new Vector3(radius * 2f, radius * 2f, length));
             Vector3 posV3 = new Vector3(position.x, 0, position.y);
             this.detailLevels = detailLevels;
 
             meshObject = new GameObject("Terrain Chunk");
+            meshObject.tag = "Terrain";
+            meshObject.layer = 6;
             meshRenderer = meshObject.AddComponent<MeshRenderer>(); // add component returns component it adds
             meshFilter = meshObject.AddComponent<MeshFilter>();
             meshCollider = meshObject.AddComponent<MeshCollider>();
             this.colliderEnabled = colliderEnabled;
             meshRenderer.material = material;
+            meshCollider.material = phyMaterial;
 
             meshObject.transform.position = posV3 * scale;
             meshObject.transform.parent = parent;

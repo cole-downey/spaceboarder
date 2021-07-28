@@ -53,6 +53,14 @@ public static class TextureGenerator {
         return TextureFromColorMap(colorMap, texWidth, texHeight);
     }
 
+    public static Texture2D TextureFromGradient(Gradient gradient, int resolution = 10) {
+        Color[] colorMap = new Color[resolution];
+        for(int i = 0; i < resolution; i++) {
+            colorMap[i] = gradient.Evaluate(1.0f * i / (float)(resolution - 1));
+        }
+        return TextureFromColorMap(colorMap, resolution, 1);
+    }
+
 
 
 }

@@ -35,6 +35,7 @@ public class MapGenerator : MonoBehaviour {
     public bool autoUpdate;
 
     public Gradient snowGradient;
+    public Material terrainMat;
 
     Queue<MapThreadInfo<MapData>> mapDataThreadInfoQueue = new Queue<MapThreadInfo<MapData>>();
     Queue<MapThreadInfo<MeshData>> meshDataThreadInfoQueue = new Queue<MapThreadInfo<MeshData>>();
@@ -44,6 +45,7 @@ public class MapGenerator : MonoBehaviour {
         MapDisplay display = FindObjectOfType<MapDisplay>();
         display.SetVisible(false);
         MeshGenerator.regions = snowGradient;
+        terrainMat.SetTexture("regions", TextureGenerator.TextureFromGradient(snowGradient, 100));
     }
 
     public void DrawMapInEditor() {
@@ -118,6 +120,7 @@ public class MapGenerator : MonoBehaviour {
         if (meshLength < 2) meshLength = 2;
         if (meshRadius < 2) meshRadius = 2;
         MeshGenerator.regions = snowGradient;
+        terrainMat.SetTexture("regions", TextureGenerator.TextureFromGradient(snowGradient, 100));
     }
 
     struct MapThreadInfo<T> {
