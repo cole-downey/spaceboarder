@@ -18,7 +18,7 @@ public class MapGenerator : MonoBehaviour {
     public float speedNoiseSpace = 1.0f;
     public float tOffset = 0.0f;
     public const int mapCircumference = 241;
-    public const int mapLength = 241;
+    public const int mapLength = 61;
     public float meshRadius = 10.0f;
     public float meshLength = 20.0f;
     public float tOffsetPerChunk { get; private set; }

@@ -38,8 +38,8 @@ public class PlayerMovement : MonoBehaviour {
         fWheel.AddForce(gravity * gravStrength, ForceMode.Acceleration);
         bWheel.AddForce(gravity * gravStrength, ForceMode.Acceleration);
 
-        int layerMask = 1 << 6;
-        RaycastHit hit;
+        //int layerMask = 1 << 6;
+        //RaycastHit hit;
         
         /*
         if (Physics.Raycast(board.position, gravDirection, out hit, groundedDistance, layerMask)) {

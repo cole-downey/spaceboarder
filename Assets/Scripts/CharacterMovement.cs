@@ -15,6 +15,8 @@ public class CharacterMovement : MonoBehaviour {
 
     private Vector3 currentEulerAngles;
 
+    public BallMovement ballMove;
+
     void Start() {
 
     }
@@ -24,12 +26,17 @@ public class CharacterMovement : MonoBehaviour {
         tiltInput = Input.GetAxis("Vertical");
         rollInput = Input.GetAxis("Roll");
 
-        //currentEulerAngles += new Vector3(tiltInput, turnInput, rollInput) * Time.deltaTime * rotationSpeed;
         Vector3 rotationPerAxis = new Vector3(tiltInput, turnInput, rollInput) * Time.deltaTime * rotationSpeed;
-        // rotate x
-        transform.Rotate(transform.right, rotationPerAxis.x, Space.World);
+
+        if (!ballMove.isGrounded) {
+            transform.Rotate(transform.right, rotationPerAxis.x, Space.World);
+            transform.Rotate(transform.forward, rotationPerAxis.z, Space.World);
+        } else {
+            if (Input.GetButtonDown("Jump")) {
+                ballMove.Jump();
+            }
+        }
         transform.Rotate(transform.up, rotationPerAxis.y, Space.World);
-        transform.Rotate(transform.forward, rotationPerAxis.z, Space.World);
 
     }
 }

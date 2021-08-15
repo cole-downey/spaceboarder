@@ -3,17 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FollowBall : MonoBehaviour {
-    public Transform ball;
+    public GameObject ball;
+    public BallMovement ballMove;
     public Vector3 gravDir = Vector3.up;
     private float ballRadius;
+    public bool orientToGround = true;
+    public float orientationSpeed = 180; // degrees per second 
 
     void Start() {
-        ballRadius = ball.localScale.x / 2;
-        transform.position = ball.position - gravDir * ballRadius;
-
+        ballRadius = ball.transform.localScale.x / 2;
+        transform.position = ball.transform.position - gravDir * (ballRadius + 0.2f);
+        ballMove = ball.GetComponent<BallMovement>();
     }
 
     void Update() {
-        transform.position = ball.position - gravDir * ballRadius;
+        transform.position = ball.transform.position - gravDir * ballRadius;
+        if(orientToGround && ballMove.isGrounded) {
+            OrientToGround();
+        }
+    }
+
+    public void OrientToGround() {
+        Vector3 lookDir = Vector3.ProjectOnPlane(transform.forward, ballMove.surfaceNor).normalized;
+        //Debug.DrawLine(transform.position, transform.position + lookDir, Color.green, 0.5f);
+        var step = orientationSpeed * Time.deltaTime;
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(lookDir, ballMove.surfaceNor), step);
     }
 }
