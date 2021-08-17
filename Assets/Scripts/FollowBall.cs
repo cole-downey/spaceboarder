@@ -5,19 +5,18 @@ using UnityEngine;
 public class FollowBall : MonoBehaviour {
     public GameObject ball;
     public BallMovement ballMove;
-    public Vector3 gravDir = Vector3.up;
     private float ballRadius;
     public bool orientToGround = true;
     public float orientationSpeed = 180; // degrees per second 
 
     void Start() {
-        ballRadius = ball.transform.localScale.x / 2;
-        transform.position = ball.transform.position - gravDir * (ballRadius + 0.2f);
         ballMove = ball.GetComponent<BallMovement>();
+        ballRadius = ball.transform.localScale.x / 2;
+        transform.position = ball.transform.position;
     }
 
     void Update() {
-        transform.position = ball.transform.position - gravDir * ballRadius;
+        transform.position = ball.transform.position + ballMove.gravity.dir * (ballRadius);
         if(orientToGround && ballMove.isGrounded) {
             OrientToGround();
         }

@@ -8,7 +8,7 @@ public class BallMovement : MonoBehaviour {
     public Transform[] groundSamplers;
 
     public float gravStrength = 9.8f;
-    private Vector3 gravDirection;
+    public GravData gravity;
     public float forwardForce = 10f;
     public float carveForce = 10f;
     public float jumpForce = 10f;
@@ -22,17 +22,20 @@ public class BallMovement : MonoBehaviour {
     void Start() {
         rb = GetComponent<Rigidbody>();
         characterMovement = character.GetComponent<CharacterMovement>();
-        gravDirection = new Vector3(0.0f, -1.0f, 0.0f);
         layerMask = 1 << 6;
         groundSamplers = new Transform[4];
         groundSamplers[0] = character.transform.Find("GroundSamplerFR");
         groundSamplers[1] = character.transform.Find("GroundSamplerFL");
         groundSamplers[2] = character.transform.Find("GroundSamplerBR");
         groundSamplers[3] = character.transform.Find("GroundSamplerBL");
+
+        GravitySampler.SetGravStrength(gravStrength);
     }
 
     void FixedUpdate() {
-        rb.AddForce(gravDirection * gravStrength, ForceMode.Acceleration);
+        gravity = GravitySampler.Sample(transform.position);
+        Debug.DrawLine(transform.position, gravity.dir + transform.position, Color.magenta);
+        rb.AddForce(gravity.dir * gravity.strength, ForceMode.Acceleration);
         if (UpdateGrounded()) {
             //characterMovement.OrientToGround(surfaceNor);
             rb.AddForce(Vector3.forward * forwardForce);
@@ -53,6 +56,7 @@ public class BallMovement : MonoBehaviour {
                 tempGrounded = true;
                 tempNor += hit.normal;
             }
+            //Debug.DrawLine(sampler.position, sampler.position + sampler.forward * groundedDistance, Color.green);
         }
         //isGrounded = Physics.Raycast(transform.position, gravDirection, out hit, groundedDistance + transform.localScale.x * 0.5f, layerMask);
         isGrounded = tempGrounded;

@@ -2,21 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraMovement : MonoBehaviour
-{
+public class CameraMovement : MonoBehaviour {
     public Transform player;
-    private Transform cam;
     public Material terrainMat;
-    // Start is called before the first frame update
-    void Start()
-    {
-        cam = GetComponent<Transform>();
-    }
+    public float distFromPlayer = 10f;
+    [Range (0, 90)]
+    public float angle = 45f;
 
-    // Update is called once per frame
-    void Update()
-    {
-        cam.position = player.position + new Vector3(0.0f, 1.0f, -10.0f);
-        terrainMat.SetVector("CamPosition", cam.position);
+    void Update() {
+        var up = -GravitySampler.Sample(player.position).dir;
+        transform.position = player.position + new Vector3(up.x * Mathf.Sin(angle * Mathf.Deg2Rad), up.y * Mathf.Sin(angle * Mathf.Deg2Rad), -Mathf.Cos(angle * Mathf.Deg2Rad)).normalized * distFromPlayer;
+        transform.LookAt(player, up);
+        terrainMat.SetVector("CamPosition", transform.position);
     }
 }
