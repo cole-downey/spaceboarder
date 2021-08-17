@@ -181,7 +181,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - CamPosition: {r: 134.51028, g: -280.0838, b: 192.86722, a: 0}
+    - CamPosition: {r: 51.039497, g: -253.07819, b: 3458.6873, a: 0}
     - Color_5f1a57b497194b15ae6082fa1b4f4bc3: {r: 0, g: 0, b: 0, a: 0}
     - Color_d9b6e2ab397e4395b223ebd6f26e3409: {r: 0, g: 0, b: 0, a: 0}
     - Vector3_a159aa40300e42db98b69c5a22d7544b: {r: 0, g: 0, b: 0, a: 0}
