@@ -1780,7 +1780,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ball: {fileID: 361121751}
   ballMove: {fileID: 361121756}
-  gravDir: {x: 0, y: 1, z: 0}
   orientToGround: 1
   orientationSpeed: 180
 --- !u!4 &1541487470
@@ -2378,7 +2377,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 21000
-  field of view: 60
+  field of view: 90
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -2456,8 +2455,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1541487470}
   terrainMat: {fileID: 2100000, guid: e992755656a10214385a57174000f504, type: 2}
-  distFromCenter: 300
-  zOffset: 200
+  distFromPlayer: 10
+  angle: 15
 --- !u!1 &2130653858
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ public class CameraMovement : MonoBehaviour {
     [Range (0, 90)]
     public float angle = 45f;
 
-    void Update() {
+    void LateUpdate() {
         var up = -GravitySampler.Sample(player.position).dir;
         transform.position = player.position + new Vector3(up.x * Mathf.Sin(angle * Mathf.Deg2Rad), up.y * Mathf.Sin(angle * Mathf.Deg2Rad), -Mathf.Cos(angle * Mathf.Deg2Rad)).normalized * distFromPlayer;
         transform.LookAt(player, up);

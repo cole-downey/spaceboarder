@@ -18,6 +18,7 @@ public class BallMovement : MonoBehaviour {
     public float groundedDistance = 0.12f;
     private int layerMask;
     public Vector3 surfaceNor;
+    private Vector3 lastCollisionDir;
 
     void Start() {
         rb = GetComponent<Rigidbody>();
@@ -41,30 +42,43 @@ public class BallMovement : MonoBehaviour {
             rb.AddForce(Vector3.forward * forwardForce);
             // carving force
             rb.AddForce(character.transform.right * -Vector3.Dot(character.transform.right, rb.velocity) * carveForce);
-        } else {
         }
 
     }
 
     bool UpdateGrounded() {
         RaycastHit hit;
-        bool tempGrounded = false;
-        Vector3 tempNor = Vector3.zero;
+        if (Physics.Raycast(transform.position, gravity.dir, out hit, groundedDistance + transform.localScale.x * 0.5f, layerMask)) {
+            isGrounded = true;
+            surfaceNor = hit.normal;
+        } else if (Physics.Raycast(transform.position, lastCollisionDir, out hit, groundedDistance + transform.localScale.x * 0.5f, layerMask)) {
+            // if gravity raycast doesn't hit, try casting towards last collider hit
+            isGrounded = true;
+            surfaceNor = hit.normal;
+        } else {
+            isGrounded = false;
+        }
+        return isGrounded;
+        /*
         foreach (var sampler in groundSamplers) {
-            bool thisGrounded = Physics.Raycast(sampler.position, sampler.forward, out hit, groundedDistance, layerMask);
-            if(thisGrounded) {
-                tempGrounded = true;
+            if (Physics.Raycast(sampler.position, sampler.forward, out hit, groundedDistance, layerMask)) {
                 tempNor += hit.normal;
             }
             //Debug.DrawLine(sampler.position, sampler.position + sampler.forward * groundedDistance, Color.green);
         }
-        //isGrounded = Physics.Raycast(transform.position, gravDirection, out hit, groundedDistance + transform.localScale.x * 0.5f, layerMask);
-        isGrounded = tempGrounded;
-        surfaceNor = tempNor.normalized;
-        return isGrounded;
+        */
     }
 
     public void Jump() {
         rb.AddForce(surfaceNor * jumpForce, ForceMode.Impulse);
     }
+
+    public void OnCollisionStay(Collision collInfo) {
+        foreach (var contact in collInfo.contacts) {
+            if (contact.otherCollider.tag == "Terrain") {
+                lastCollisionDir = (contact.point - transform.position).normalized;
+            }
+        }
+    }
+
 }
